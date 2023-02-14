@@ -2,6 +2,7 @@
 
 * {
   box-sizing: border-box;
+  
 }
 
 html {
@@ -11,5 +12,10 @@ html {
 body {
   margin: 0;
   background-color: #3f3f3f;
+}
+
+.home {
+
+  text-align: center;
 }
 
