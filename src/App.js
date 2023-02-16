@@ -41,9 +41,20 @@ function App() {
     if (cart.length === 0) {
       setCart([addedMeal]);
     } else {
-      setCart((prevCart) => {
-        return [...prevCart, addedMeal];
-      });
+      let repeatingMealIndex = cart.findIndex(
+        (item) => item.id === addedMeal.id
+      );
+      if (repeatingMealIndex !== -1) {
+        cart[repeatingMealIndex].count =
+          cart[repeatingMealIndex].count + addedMeal.count;
+        setCartCount((prevCartCount) => {
+          return prevCartCount + addedMeal.count;
+        });
+      } else {
+        setCart((prevCart) => {
+          return [...prevCart, addedMeal];
+        });
+      }
     }
   };
 
@@ -57,18 +68,53 @@ function App() {
 
   useEffect(() => {
     if (cart.length > 0) {
-      console.log(cart.slice(-1)[0].count);
-      setCartCount((prevCartCount) => {
-        return prevCartCount + cart.slice(-1)[0].count;
+      let sum = 0;
+
+      cart.forEach((item) => {
+        sum = sum + item.count;
       });
+
+      setCartCount(sum);
     }
   }, [cart]);
 
-  const addHandler = (event) => {
-    console.log(event);
+  const addHandler = (cartItemID) => {
+    const updatedCart = cart.map((item) => {
+      if (item.id === cartItemID) {
+        return { ...item, count: item.count + 1 };
+      }
+
+      return item;
+    });
+
+    setCart(updatedCart);
+    setCartCount((prevCartCount) => {
+      return prevCartCount + 1;
+    });
   };
 
-  const removeHandler = (event) => {};
+  const removeHandler = (cartItemID) => {
+    const updatedCart = cart.map((item) => {
+      if (item.id === cartItemID) {
+        return { ...item, count: item.count - 1 };
+      }
+
+      return item;
+    });
+
+    setCart(updatedCart);
+    setCartCount((prevCartCount) => {
+      return prevCartCount - 1;
+    });
+  };
+
+  const orderHandler = () => {
+    console.log("Order processed!");
+    console.log(cart);
+    setCart([]);
+    setCartCount(0);
+    openCartHandler();
+  };
 
   return (
     <>
@@ -78,6 +124,7 @@ function App() {
           cart={cart}
           onAdd={addHandler}
           onRemove={removeHandler}
+          onOrder={orderHandler}
         />
       )}
       <Header cartCount={cartCount} onOpenCart={openCartHandler} />

@@ -10,11 +10,11 @@ function HeaderCartButton(props) {
 
   return (
     <button onClick={openCartHandler} className={classes.button}>
-      <div className={classes.icon}>
+      <span className={classes.icon}>
         <CartIcon />
-      </div>
+      </span>
       {props.title}
-      <div className={classes.badge}>{props.count}</div>
+      <span className={classes.badge}>{props.count}</span>
     </button>
   );
 }

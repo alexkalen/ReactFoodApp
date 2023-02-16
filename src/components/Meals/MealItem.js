@@ -5,17 +5,17 @@ import MealItemForm from "./MealItemForm";
 function MealItem(props) {
   const addingMealsHandler = (mealsCount) => {
     const addedMeal = {
+      id: props.id,
       name: props.mealName,
       price: props.mealPrice,
       count: +mealsCount,
-      id: Math.random().toString(),
     };
 
     props.onAddMeal(addedMeal);
   };
 
   return (
-    <div className={classes.meal}>
+    <li className={classes.meal}>
       <div>
         <h3>{props.mealName}</h3>
         <div className={classes.description}>{props.mealDescription}</div>
@@ -24,7 +24,7 @@ function MealItem(props) {
       <div>
         <MealItemForm onAddingMeals={addingMealsHandler} />
       </div>
-    </div>
+    </li>
   );
 }
 

@@ -15,6 +15,7 @@ function AvailableMeals(props) {
         {props.meals.map((meal) => (
           <MealItem
             key={meal.id}
+            id={meal.id}
             mealName={meal.name}
             mealDescription={meal.description}
             mealPrice={meal.price}
