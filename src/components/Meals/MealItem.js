@@ -1,8 +1,13 @@
+import { useContext } from "react";
+
+import CartContext from "../../context/cart-context";
 import classes from "./MealItem.module.css";
 
 import MealItemForm from "./MealItemForm";
 
 function MealItem(props) {
+  const ctx = useContext(CartContext);
+
   const addingMealsHandler = (mealsCount) => {
     const addedMeal = {
       id: props.id,
@@ -11,7 +16,7 @@ function MealItem(props) {
       count: +mealsCount,
     };
 
-    props.onAddMeal(addedMeal);
+    ctx.addMealToCart(addedMeal);
   };
 
   return (

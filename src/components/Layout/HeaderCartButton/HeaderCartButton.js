@@ -1,20 +1,19 @@
+import { useContext } from "react";
+
 import classes from "./HeaderCartButton.module.css";
 import CartIcon from "./CartIcon";
+import CartContext from "../../../context/cart-context";
 
-function HeaderCartButton(props) {
-  const openCartHandler = (event) => {
-    event.preventDefault();
-
-    props.onOpenCartButton();
-  };
+function HeaderCartButton() {
+  const ctx = useContext(CartContext);
 
   return (
-    <button onClick={openCartHandler} className={classes.button}>
+    <button onClick={ctx.openCartHandler} className={classes.button}>
       <span className={classes.icon}>
         <CartIcon />
       </span>
-      {props.title}
-      <span className={classes.badge}>{props.count}</span>
+      Your Cart
+      <span className={classes.badge}>{ctx.cartCount}</span>
     </button>
   );
 }

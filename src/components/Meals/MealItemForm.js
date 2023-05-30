@@ -1,34 +1,33 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import classes from "./MealItemForm.module.css";
 import Input from "../UI/Input/Input";
 
 function MealItemForm(props) {
-  const [mealCounter, setMealCounter] = useState(0);
+  const [formValid, setformValid] = useState(true);
+  const mealCountRef = useRef();
 
-  const addMealHandler = (event) => {
+  const submitHandler = (event) => {
     event.preventDefault();
 
-    if (mealCounter === 0) {
+    const mealCount = +mealCountRef.current.value;
+
+    if (mealCount.length === 0 || mealCount < 1 || mealCount > 5) {
+      setformValid(false);
       return;
     }
 
-    props.onAddingMeals(mealCounter);
-
-    setMealCounter(0);
-  };
-
-  const changeMealCounter = (numberOfMeals) => {
-    setMealCounter(numberOfMeals);
+    props.onAddingMeals(mealCount); //Not calling context here because we still information about the cart
   };
 
   return (
-    <form onSubmit={addMealHandler} className={classes.form}>
+    <form onSubmit={submitHandler} className={classes.form}>
       <div>
-        <Input counter={mealCounter} onMealCounterChange={changeMealCounter} />
+        <Input ref={mealCountRef} />
       </div>
       <div>
         <button type="submit">Add</button>
+        {!formValid && <p>Please enter amount 1-5</p>}
       </div>
     </form>
   );

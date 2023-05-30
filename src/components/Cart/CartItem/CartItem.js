@@ -1,14 +1,18 @@
+import CartContext from "../../../context/cart-context";
 import classes from "./CartItem.module.css";
 
+import { useContext } from "react";
+
 const CartItem = (props) => {
+  const ctx = useContext(CartContext);
   const price = `$${props.price.toFixed(2)}`;
 
   const onRemoveHandler = () => {
-    props.onRemove(props.id);
+    ctx.removeHandler(props.id);
   };
 
   const onAddHandler = () => {
-    props.onAdd(props.id);
+    ctx.addHandler(props.id);
   };
 
   return (

@@ -1,21 +1,13 @@
 import classes from "./Input.module.css";
+import React from "react";
 
-function Input(props) {
-  const mealCounterHandler = (event) => {
-    props.onMealCounterChange(event.target.value);
-  };
-
+const Input = React.forwardRef((props, ref) => {
   return (
     <div className={classes.input}>
       <label>Amount</label>
-      <input
-        type="number"
-        min="0"
-        value={props.counter}
-        onChange={mealCounterHandler}
-      ></input>
+      <input ref={ref} type="number" min="0" value={props.counter}></input>
     </div>
   );
-}
+});
 
 export default Input;
