@@ -7,9 +7,11 @@ import { useCallback, useEffect, useState } from "react";
 
 function AvailableMeals() {
   const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchMealsHandler = useCallback(async () => {
+    setIsLoading(true);
     setError(null);
     try {
       const response = await fetch(
@@ -35,14 +37,17 @@ function AvailableMeals() {
     } catch (error) {
       setError(error.message);
     }
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
     fetchMealsHandler();
   }, [fetchMealsHandler]);
 
-  return (
-    <Card className={classes.meals}>
+  let content = <p>No meals available</p>;
+
+  if (meals.length > 0) {
+    content = (
       <ul>
         {meals.map((meal) => (
           <MealItem
@@ -54,6 +59,24 @@ function AvailableMeals() {
           />
         ))}
       </ul>
+    );
+  }
+
+  if (error) {
+    content = <p>{error}</p>;
+  }
+
+  if (isLoading) {
+    content = (
+      <div className={classes["loading-container"]}>
+        <div className={classes["lds-dual-ring"]}></div>
+      </div>
+    );
+  }
+
+  return (
+    <Card className={classes.meals}>
+      <section>{content}</section>
     </Card>
   );
 }

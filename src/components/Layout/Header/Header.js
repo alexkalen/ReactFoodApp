@@ -8,7 +8,7 @@ function Header() {
   return (
     <>
       <header className={classes["header"]}>
-        <h1>FoodApp</h1>
+        <h1>Hachi Asian Street Food</h1>
         <HeaderCartButton></HeaderCartButton>
       </header>
       <div className={classes["main-image"]}>

@@ -5,7 +5,7 @@ const Input = React.forwardRef((props, ref) => {
   return (
     <div className={classes.input}>
       <label>Amount</label>
-      <input ref={ref} type="number" min="0" value={props.counter}></input>
+      <input ref={ref} type="number" min="0"></input>
     </div>
   );
 });

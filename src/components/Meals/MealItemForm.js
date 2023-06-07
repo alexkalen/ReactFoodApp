@@ -5,7 +5,7 @@ import Input from "../UI/Input/Input";
 
 function MealItemForm(props) {
   const [formValid, setformValid] = useState(true);
-  const mealCountRef = useRef();
+  const mealCountRef = useRef(0);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -21,15 +21,17 @@ function MealItemForm(props) {
   };
 
   return (
-    <form onSubmit={submitHandler} className={classes.form}>
-      <div>
-        <Input ref={mealCountRef} />
-      </div>
-      <div>
-        <button type="submit">Add</button>
+    <>
+      <form onSubmit={submitHandler} className={classes.form}>
+        <div>
+          <Input ref={mealCountRef} counter={mealCountRef} />
+        </div>
+        <div>
+          <button type="submit">Add</button>
+        </div>
         {!formValid && <p>Please enter amount 1-5</p>}
-      </div>
-    </form>
+      </form>
+    </>
   );
 }
 

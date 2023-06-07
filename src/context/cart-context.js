@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 const CartContext = React.createContext({
   cart: [],
   cartCount: 0,
+  cartTotal: 0,
   openCart: false,
   addMealToCart: (addedMeal) => {},
   openCartHandler: () => {},
@@ -14,17 +15,21 @@ const CartContext = React.createContext({
 export const CartContextProvider = (props) => {
   const [cart, setCart] = useState([]);
   const [cartCount, setCartCount] = useState(0);
+  const [cartTotal, setCartTotal] = useState(0);
   const [openCart, setOpenCart] = useState(false);
 
   useEffect(() => {
     if (cart.length > 0) {
       let sum = 0;
+      let totalSum = 0;
 
       //Check it theres a better way so you dont iterate through cart every time.
       cart.forEach((item) => {
+        totalSum = totalSum + item.price * item.count;
         sum = sum + item.count;
       });
 
+      setCartTotal(totalSum.toFixed(2));
       setCartCount(sum);
     }
   }, [cart]);
@@ -78,6 +83,7 @@ export const CartContextProvider = (props) => {
   const removeHandler = (cartItemID) => {
     const updatedCart = cart.map((item) => {
       if (item.id === cartItemID) {
+        if (item.count === 0) return item;
         return { ...item, count: item.count - 1 };
       }
 
@@ -91,7 +97,7 @@ export const CartContextProvider = (props) => {
   };
 
   const orderHandler = () => {
-    console.log("Order processed!");
+    console.log("Checkout...");
     console.log(cart);
     setCart([]);
     setCartCount(0);
@@ -103,6 +109,7 @@ export const CartContextProvider = (props) => {
       value={{
         cart: cart,
         cartCount: cartCount,
+        cartTotal: cartTotal,
         openCart: openCart,
         addMealToCart: addMealToCart,
         openCartHandler: openCartHandler,

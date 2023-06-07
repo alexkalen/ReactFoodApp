@@ -13,6 +13,13 @@
   font-weight: bold;
 }
 
+.form p {
+  margin-bottom: 0;
+
+  font-size: small;
+  color: #a81207;
+}
+
 .form button:hover,
 .form button:active {
   background-color: #311bde;
